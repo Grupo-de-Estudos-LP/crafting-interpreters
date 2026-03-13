@@ -46,4 +46,7 @@ replay_pid*
 .history
 .ionide
 
+#asdf
+.tool-versions
+
 # End of https://www.toptal.com/developers/gitignore/api/java,visualstudiocode
