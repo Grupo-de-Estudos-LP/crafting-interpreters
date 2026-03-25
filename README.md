@@ -1,7 +1,14 @@
 # Crafting Interpreters
 
+## 🇧🇷
 Projeto de implementação da linguagem Lox seguindo o livro [Crafting Interpreters](https://craftinginterpreters.com/contents.html).
 
 ---
 
-Este é o 1º projeto do **Grupo de Estudos em Linguagens de Programação - INF/UFG**
+## 🇨🇦
+Lox language implementation project following the book [Crafting Interpreters](https://craftinginterpreters.com/contents.html).
+
+---
+
+## 🇵🇦
+Proyecto de implementación del lenguaje Lox siguiendo el libro [Crafting Interpreters](https://craftinginterpreters.com/contents.html).
