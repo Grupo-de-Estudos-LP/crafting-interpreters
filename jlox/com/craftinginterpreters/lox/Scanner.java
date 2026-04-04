@@ -170,8 +170,13 @@ class Scanner {
 		// Dígitos antes do '.'
 		while (isDigit(peek())) advance();
 
-		// Deveria lançar um erro se terminar número com '.'
-		if (peek() == '.' && isDigit(peekNext())) {
+		// Emite um erro se ler um '.' e não tiver mais dígitos
+		if (peek() == '.') {
+			if (!isDigit(peekNext())) {
+				Lox.error(line, "Invalid number.");
+				return;
+			}
+
 			// Consome o '.'
 			advance();
 
