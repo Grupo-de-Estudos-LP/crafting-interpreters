@@ -1,0 +1,29 @@
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+
+version: '3'
+
+env:
+    CODE_PATH: jlox/com/craftinginterpreters/lox/*.java
+    PACKAGE: com.craftinginterpreters.lox.Lox
+
+tasks:
+    build:
+        cmds:
+            - javac -d out $CODE_PATH
+        silent: true
+    
+    run:
+        cmds:
+            - java -cp out $PACKAGE
+        silent: true
+    
+    clean:
+        cmds:
+            - rm -rf out
+        silent: true
+    
+    default:
+        cmds:
+            - task: build
+            - task: run
+

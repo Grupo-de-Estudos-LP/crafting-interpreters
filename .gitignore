@@ -2,6 +2,9 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=java,visualstudiocode
 
 ### Java ###
+# Compiled classes directory
+out/
+
 # Compiled class file
 *.class
 
