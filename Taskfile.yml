@@ -2,24 +2,36 @@
 
 version: '3'
 
-env:
-    CODE_PATH: jlox/com/craftinginterpreters/lox/*.java
-    PACKAGE: com.craftinginterpreters.lox.Lox
+vars:
+    CODE_PATH: 'jlox/com/craftinginterpreters/lox/*.java'
+    OUT_DIR: 'out'
+    PACKAGE: 'com.craftinginterpreters.lox.Lox'
+    TEST: 'tests/test.lox'
 
 tasks:
     build:
+        sources:
+            - '{{.CODE_PATH}}'
+        generates:
+            - '{{.OUT_DIR}}/**/*.class'
         cmds:
-            - javac -d out $CODE_PATH
+            - javac -d {{.OUT_DIR}} {{.CODE_PATH}}
         silent: true
     
     run:
         cmds:
-            - java -cp out $PACKAGE
+            - java -cp {{.OUT_DIR}} {{.PACKAGE}}
         silent: true
     
     clean:
         cmds:
-            - rm -rf out
+            - rm -rf {{.OUT_DIR}}
+        silent: true
+    
+    test:
+        deps: [build]
+        cmds:
+            - java -cp {{.OUT_DIR}} {{.PACKAGE}} {{.TEST}}
         silent: true
     
     default:
