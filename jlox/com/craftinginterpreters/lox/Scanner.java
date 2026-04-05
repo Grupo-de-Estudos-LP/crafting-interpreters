@@ -84,6 +84,8 @@ class Scanner {
 					// É um comentário inline
 					while (peek() != '\n' && !isAtEnd()) advance();
 					// !isAtEnd() na esquerda para curto-circuito?
+				} else if (match('*')) {
+					comment();
 				} else {
 					addToken(SLASH);
 				}
@@ -194,6 +196,22 @@ class Scanner {
 		TokenType type = keywords.get(text);
 		if (type == null) type = IDENTIFIER;
 		addToken(type);
+	}
+
+	private void comment() {
+		while (!(peek() == '*' && peekNext() == '/') && !isAtEnd()) {
+			if (peek() == '\n') line++;
+			advance();
+		}
+
+		if (isAtEnd()) {
+			Lox.error(line, "Unterminated block comment");
+			return;
+		}
+
+		// Consome */
+		advance();
+		advance();
 	}
 
 	private boolean isDigit(char c) {
