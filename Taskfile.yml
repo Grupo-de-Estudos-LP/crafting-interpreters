@@ -4,8 +4,12 @@ version: '3'
 
 vars:
     CODE_PATH: 'jlox/com/craftinginterpreters/lox/*.java'
+    TOOL_PATH: 'jlox/com/craftinginterpreters/tool/*.java'
+    CODE_DIR: 'jlox/com/craftinginterpreters/lox'
+    TOOL_DIR: 'jlox/com/craftinginterpreters/tool'
     OUT_DIR: 'out'
     PACKAGE: 'com.craftinginterpreters.lox.Lox'
+    TOOL_PACKAGE: 'com.craftinginterpreters.tool.GenerateAst'
     TEST: 'tests/test.lox'
 
 tasks:
@@ -23,9 +27,19 @@ tasks:
             - java -cp {{.OUT_DIR}} {{.PACKAGE}}
         silent: true
     
+    tool:
+        sources:
+            - '{{.TOOL_PATH}}'
+        generates:
+            - '{{.TOOL_PATH}}/**/*.class'
+        cmds:
+            - javac {{.TOOL_PATH}}
+            - java -cp jlox {{.TOOL_PACKAGE}} {{.CODE_DIR}}
+        silent: true
+    
     clean:
         cmds:
-            - rm -rf {{.OUT_DIR}}
+            - rm -rf {{.OUT_DIR}} {{.TOOL_DIR}}/*.class
         silent: true
     
     test:
