@@ -4,9 +4,6 @@
 # Task directory
 .task/
 
-# Tests directory
-tests/
-
 ### Java ###
 # Compiled classes directory
 out/
