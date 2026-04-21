@@ -3,14 +3,17 @@
 version: '3'
 
 vars:
-    CODE_PATH: 'jlox/com/craftinginterpreters/lox/*.java'
-    TOOL_PATH: 'jlox/com/craftinginterpreters/tool/*.java'
-    CODE_DIR: 'jlox/com/craftinginterpreters/lox'
-    TOOL_DIR: 'jlox/com/craftinginterpreters/tool'
-    OUT_DIR: 'out'
-    PACKAGE: 'com.craftinginterpreters.lox.Lox'
+    CODE_DIR:     'jlox/com/craftinginterpreters/lox'
+    CODE_PATH:    '{{.CODE_DIR}}/*.java'
+    CODE_PACKAGE: 'com.craftinginterpreters.lox.Lox'
+
+    TOOL_DIR:     'jlox/com/craftinginterpreters/tool'
+    TOOL_PATH:    '{{.TOOL_DIR}}/*.java'
     TOOL_PACKAGE: 'com.craftinginterpreters.tool.GenerateAst'
-    TEST: 'tests/test.lox'
+
+    OUT_DIR:  'jlox/out'
+    TEST_DIR: 'tests'
+    TEST:     '{{.TEST_DIR}}/test.lox'
 
 tasks:
     build:
@@ -24,32 +27,31 @@ tasks:
     
     run:
         cmds:
-            - java -cp {{.OUT_DIR}} {{.PACKAGE}}
+            - java -cp {{.OUT_DIR}} {{.CODE_PACKAGE}}
         silent: true
     
     tool:
         sources:
             - '{{.TOOL_PATH}}'
         generates:
-            - '{{.TOOL_PATH}}/**/*.class'
+            - '{{.CODE_DIR}}/Expr.java'
         cmds:
-            - javac {{.TOOL_PATH}}
-            - java -cp jlox {{.TOOL_PACKAGE}} {{.CODE_DIR}}
+            - javac -d {{.OUT_DIR}} {{.TOOL_PATH}}
+            - java -cp {{.OUT_DIR}} {{.TOOL_PACKAGE}} {{.CODE_DIR}}
         silent: true
     
     clean:
         cmds:
-            - rm -rf {{.OUT_DIR}} {{.TOOL_DIR}}/*.class
+            - rm -rf {{.OUT_DIR}}
         silent: true
     
     test:
         deps: [build]
         cmds:
-            - java -cp {{.OUT_DIR}} {{.PACKAGE}} {{.TEST}}
+            - java -cp {{.OUT_DIR}} {{.CODE_PACKAGE}} {{.TEST}}
         silent: true
     
     default:
         cmds:
             - task: build
             - task: run
-
